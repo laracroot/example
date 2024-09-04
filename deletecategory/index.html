@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories with Pagination, Search, Add, and Edit Feature</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Categories</h1>
+        
+        <!-- Tombol Tambah Category -->
+        <button id="add-category-btn">Tambah Category</button>
+
+        <!-- Input pencarian -->
+        <input type="text" id="search-input" placeholder="Search categories..." />
+
+        <!-- Tabel Kategori -->
+        <table id="categories-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Is Published</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                    <th>Actions</th> <!-- Tambahkan kolom untuk aksi -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data kategori akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination-container"></div>
+    </div>
+
+    <!-- Modal untuk Tambah/Edit Category -->
+    <div id="category-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Tambah Category Baru</h2>
+            <form id="category-form">
+                <input type="hidden" id="category-id" name="category-id">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="is_publish">Is Publish:</label>
+                <select id="is_publish" name="is_publish" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select><br>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
