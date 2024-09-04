@@ -1,4 +1,5 @@
 import {onInput} from 'https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/element.js';
+import { fetchCategories } from './api.js';
 
 onInput('search-input',handleSearch);
 
