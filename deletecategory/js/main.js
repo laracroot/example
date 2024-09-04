@@ -79,7 +79,7 @@ async function loadCategories(page = 1, search = '') {
 
 // Fungsi untuk menangani input pencarian
 function handleSearch(event) {
-    const searchQuery = event.value;
+    const searchQuery = event.target.value;
     loadCategories(1, searchQuery); // Mulai pencarian dari halaman 1
 }
 
@@ -87,4 +87,102 @@ function handleSearch(event) {
 const modal = document.getElementById('category-modal');
 const addCategoryBtn = document.getElementById('add-category-btn');
 const closeModalBtn = document.querySelector('.close-btn');
-const modalTitle = document.getElementById('
+const modalTitle = document.getElementById('modal-title');
+const form = document.getElementById('category-form');
+
+// Buka modal ketika tombol diklik
+addCategoryBtn.onclick = () => {
+    modalTitle.textContent = 'Tambah Category Baru';
+    form.reset();
+    form.removeAttribute('data-editing-id');
+    modal.style.display = 'block';
+};
+
+// Tutup modal ketika tombol close diklik
+closeModalBtn.onclick = () => {
+    modal.style.display = 'none';
+};
+
+// Tutup modal ketika klik di luar konten modal
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
+
+// Handle Edit Button Click
+function handleEditClick(event) {
+    const button = event.target;
+    const id = button.getAttribute('data-id');
+    const name = button.getAttribute('data-name');
+    const isPublish = button.getAttribute('data-is_publish');
+
+    modalTitle.textContent = 'Edit Category';
+    document.getElementById('category-id').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('is_publish').value = isPublish;
+
+    form.setAttribute('data-editing-id', id); // Tandai bahwa kita sedang mengedit
+    modal.style.display = 'block';
+}
+
+// Handle Delete Button Click
+async function handleDeleteClick(event) {
+    const button = event.target;
+    const id = button.getAttribute('data-id');
+
+    const confirmDelete = confirm('Apakah Anda yakin ingin menghapus kategori ini?');
+    if (confirmDelete) {
+        const response = await fetch(`https://bukupedia.alwaysdata.net/api/categories/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            loadCategories(); // Refresh kategori setelah menghapus data
+        } else {
+            console.error('Failed to delete category');
+        }
+    }
+}
+
+// Form submission logic
+form.onsubmit = async function(event) {
+    event.preventDefault(); // Mencegah reload halaman
+
+    const formData = new FormData(form);
+    const id = formData.get('category-id');
+    const name = formData.get('name');
+    const is_publish = formData.get('is_publish');
+
+    let url = 'https://bukupedia.alwaysdata.net/api/categories';
+    let method = 'POST';
+
+    if (form.hasAttribute('data-editing-id')) {
+        url += `/${id}`;
+        method = 'PUT';
+    }
+
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, is_publish })
+    });
+
+    if (response.ok) {
+        form.reset();
+        modal.style.display = 'none';
+        loadCategories(); // Refresh kategori setelah menambah/mengedit data
+    } else {
+        console.error('Failed to add/edit category');
+    }
+};
+
+// Fetch and display the first page of categories on load
+loadCategories();
