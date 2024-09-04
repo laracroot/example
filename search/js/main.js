@@ -68,7 +68,7 @@ async function loadCategories(page = 1, search = '') {
 
 // Fungsi untuk menangani input pencarian
 function handleSearch(event) {
-    const searchQuery = event.target.value;
+    const searchQuery = event.value;
     loadCategories(1, searchQuery); // Mulai pencarian dari halaman 1
 }
 
