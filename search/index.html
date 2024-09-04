@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories with Pagination and Search</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Categories</h1>
+        
+        <!-- Input pencarian -->
+        <input type="text" id="search-input" placeholder="Search categories..." oninput="handleSearch(event)" />
+
+        <table id="categories-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Is Published</th>
+                    <th>Created At</th>
+                    <th>Updated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data kategori akan dimasukkan di sini oleh JavaScript -->
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination-container"></div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
