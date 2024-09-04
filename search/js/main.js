@@ -1,9 +1,14 @@
 // js/main.js
-
+import {onInput} from 'https://cdn.jsdelivr.net/gh/jscroot/lib@0.0.4/element.js';
 import { fetchCategories } from './api.js';
+
 
 let currentPage = 1;
 let currentSearch = ''; // Variabel untuk menyimpan kata kunci pencarian
+
+
+
+onInput('searchinput',handleSearch);
 
 function renderCategories(categories) {
     const tableBody = document.querySelector('#categories-table tbody');
