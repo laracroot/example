@@ -8,7 +8,7 @@ let currentSearch = ''; // Variabel untuk menyimpan kata kunci pencarian
 
 
 
-onInput('searchinput',handleSearch);
+onInput('search-input',handleSearch);
 
 function renderCategories(categories) {
     const tableBody = document.querySelector('#categories-table tbody');
