@@ -5,13 +5,21 @@ import { fetchCategories } from './api.js';
 let currentPage = 1;
 
 function renderCategories(categories) {
-    const categoriesDiv = document.getElementById('categories');
-    categoriesDiv.innerHTML = '';
+    const tableBody = document.querySelector('#categories-table tbody');
+    tableBody.innerHTML = ''; // Kosongkan tabel sebelum mengisi
 
     categories.forEach(category => {
-        const categoryElement = document.createElement('div');
-        categoryElement.textContent = category.name;
-        categoriesDiv.appendChild(categoryElement);
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>${category.id}</td>
+            <td>${category.name}</td>
+            <td>${category.is_publish ? 'Yes' : 'No'}</td>
+            <td>${new Date(category.created_at).toLocaleString()}</td>
+            <td>${new Date(category.updated_at).toLocaleString()}</td>
+        `;
+
+        tableBody.appendChild(row);
     });
 }
 
@@ -47,8 +55,8 @@ function renderPagination(data) {
 
 async function loadCategories(page = 1) {
     const data = await fetchCategories(page);
-    renderCategories(data.data);
-    renderPagination(data);
+    renderCategories(data.data); // Menampilkan kategori di tabel
+    renderPagination(data); // Mengatur pagination
 }
 
 // Fetch and display the first page of categories on load
